@@ -12,7 +12,7 @@ from test_api.checks import run_test, skip_test, format_err_msg
 
 
 def find_total_of_multiples(limit):
-    pass
+    return sum([num for num in range(limit) if num % 3 == 0 or num % 5 == 0])
 
 
 @run_test
@@ -61,12 +61,13 @@ def test_find_total_of_multiples():
 # control = "aaaxbbbbyyhwawiwjjjwwm"
 # count_printer_errors(control) should return "8/22"
 
+import re
 
-def count_printer_errors():
-    pass
+def count_printer_errors(colours):
+    return f"{len(re.findall(r'[n-z]', colours))}/{len(colours)}"
 
 
-@skip_test
+@run_test
 def test_count_printer_errors():
     # countPrinterErrors() should return zero for an empty control string
     assert count_printer_errors("") == "0/0", \
@@ -94,12 +95,24 @@ def test_count_printer_errors():
 # See here for more details:
 #  https://www.grammarly.com/blog/how-to-write-ordinal-numbers-correctly/
 
-
 def get_ordinal_suffix(num):
-    pass
+    if num in {11, 12, 13}:
+        return "th"
+    
+    ordinal_suffixes = {
+        "1": "st",
+        "2": "nd",
+        "3": "rd",
+    }
+
+    ending = str(num)[-1]
+    if ending in ordinal_suffixes:
+        return ordinal_suffixes[ending]
+    else:
+        return "th"
 
 
-@skip_test
+@run_test
 def test_get_ordinal_suffix():
     # get_ordinal_suffix() returns 'st' when given 1
     assert get_ordinal_suffix(1) == "st", \
@@ -165,10 +178,13 @@ def test_get_ordinal_suffix():
 # This function should take a string as its argument and
 # return True if each character appears only once and False otherwise
 def contains_no_repeats(str):
-    pass
+    for c in str:
+        if str.count(c) > 1:
+            return False
+    return True
 
 
-@skip_test
+@run_test
 def test_contains_no_repeats():
     # contains_no_repeats() returns True for an empty string
     assert contains_no_repeats("") is True, format_err_msg(True, "")
@@ -205,10 +221,13 @@ def test_contains_no_repeats():
 
 
 def check_usernames_available(usernames, *names):
-    pass
+    for name in names:
+        if name in usernames:
+            return False
+    return True
 
 
-@skip_test
+@run_test
 def test_check_usernames_available():
     # check_usernames_available returns True for a single available username
     assert check_usernames_available(["Roy", "Moss"], "Jen") is True, \
