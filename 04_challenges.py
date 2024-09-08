@@ -7,6 +7,9 @@ from test_api.checks import run_test, skip_test, format_err_msg
 # It should return True if the dictionary contains the provided key,
 #  False otherwise
 
+def check_if_key_exists(dictionary, key):
+    return key in dictionary
+
 
 @run_test
 def test_check_if_key_exists():
@@ -27,8 +30,11 @@ def test_check_if_key_exists():
 #  representing a key / value pair as its argument
 # It should return a dictionary with a single key based on the input
 
+def create_dict(lst):
+    return {lst[0]: lst[1]}
 
-@skip_test
+
+@run_test
 def test_create_dict():
     assert create_dict(["name", "shaq"]) == {"name": "shaq"}, \
         format_err_msg({"name": "shaq"}, create_dict(["name", "shaq"]))
@@ -46,8 +52,11 @@ def test_create_dict():
 #  a number 'n'
 # It should return a new list containing the first 'n' items of the given list
 
+def get_first_n_items(lst, n):
+    return lst[:n]
 
-@skip_test
+
+@run_test
 def test_get_first_n_items():
     assert get_first_n_items(["a", "b", "c", "d"], 2) == ["a", "b"], \
         format_err_msg(["a", "b"], get_first_n_items(["a", "b", "c", "d"], 2))
@@ -69,8 +78,18 @@ def test_get_first_n_items():
 # You don't need to utilise an dictionary here, but think about how you
 #  could do so
 
+def create_arrow(direction):
+    directions = {
+        "left": "←",
+        "right": "→",
+        "up": "↑",
+        "down": "↓"
+    }
 
-@skip_test
+    return directions[direction]
+
+
+@run_test
 def test_create_arrow():
     assert create_arrow("left") == "←", \
         format_err_msg("←", create_arrow("left"))
@@ -88,8 +107,12 @@ def test_create_arrow():
 # It should return a new list where the item that was previously at the
 #  given index is now at the end of the list
 
+def move_item_to_end(lst, index):
+    item = lst.pop(index)
+    lst.append(item)
+    return lst
 
-@skip_test
+@run_test
 def test_move_item_to_end():
     assert move_item_to_end(["a", "b", "c"], 0) == ["b", "c", "a"], \
         format_err_msg(["b", "c", "a"], move_item_to_end(["a", "b", "c"], 0))
@@ -119,8 +142,11 @@ def test_move_item_to_end():
 # The user's age should be increased by 1 to reflect their recent birthday
 # NOTE: This function does NOT need to return anything!
 
+def update_user_age(user):
+    user["personal_details"]["age"] += 1
 
-@skip_test
+
+@run_test
 def test_update_user_age():
     user1 = {
         "admin": False,
@@ -184,8 +210,10 @@ def test_update_user_age():
 # It should return True if it is an infinitive verb, and False otherwise
 # A French infinitive verb is a word that ends with either "re", "ir" or "er"
 
+def check_infinitive(string):
+    return string[-2:] in {"re", "ir", "er"}
 
-@skip_test
+@run_test
 def test_check_infinitive():
     assert check_infinitive("manger") is True, \
         format_err_msg(True, check_infinitive("manger"))
@@ -218,8 +246,10 @@ def test_check_infinitive():
 # It should return a list containing all strings ending with an 's' from the
 #  input (retaining the order)
 
+def collect_plurals(strings):
+    return [string for string in strings if string.endswith("s")]
 
-@skip_test
+@run_test
 def test_collect_plurals():
     assert collect_plurals(["dogs", "cat", "apples", "kittens", "kiwi"]) == \
         ["dogs", "apples", "kittens"], \
@@ -244,8 +274,12 @@ def test_collect_plurals():
 # You should return a list of user objects each with the 'admin' key set
 #  to True
 
+def make_all_admins(users):
+    for user in users:
+        user["admin"] = True
+    return users
 
-@skip_test
+@run_test
 def test_make_all_admins():
     users = [
         {"name": "Barry", "admin": False},
