@@ -3,8 +3,8 @@ from test_api.checks import run_test, skip_test, format_err_msg
 
 # Challenge 0
 # This function should return the product of two passed numbers.
-def multiply():
-    pass
+def multiply(a, b):
+    return a * b
 
 
 @run_test
@@ -17,11 +17,11 @@ def test_multiply():
 # Challenge 1
 # This function should take a single argument and return its value rounded
 # DOWN to the nearest integer.
-def round_down():
-    pass
+def round_down(num):
+    return int(num)
 
 
-@skip_test
+@run_test
 def test_round_down():
     assert round_down(100.1) == 100, format_err_msg(100, round_down(100.1))
     assert round_down(25.5) == 25, format_err_msg(100, round_down(25.5))
@@ -31,11 +31,11 @@ def test_round_down():
 # Challenge 2
 # This function should take two arguments, m and n, and return m raised to the
 # power of n.
-def raise_to_power():
-    pass
+def raise_to_power(m ,n):
+    return m**n
 
 
-@skip_test
+@run_test
 def test_raise_to_power():
     assert raise_to_power(10, 3) == 1000, \
         format_err_msg(1000, raise_to_power(10, 3))
@@ -48,11 +48,11 @@ def test_raise_to_power():
 # Challenge 3
 # This function should take a number as an argument
 # and return True if it is a multiple of 6, False otherwise.
-def is_multiple_of_6():
-    pass
+def is_multiple_of_6(num):
+    return num % 6 == 0
 
 
-@skip_test
+@run_test
 def test_is_multiple_of_6():
     assert is_multiple_of_6(6) is True, \
         format_err_msg(True, is_multiple_of_6(6))
@@ -73,11 +73,11 @@ def test_is_multiple_of_6():
 # the same string with the first letter capitalised.
 
 
-def capitalise_first_letter():
-    pass
+def capitalise_first_letter(string):
+    return string.capitalize()
 
 
-@skip_test
+@run_test
 def test_capitalise_first_letter():
     assert capitalise_first_letter("bang") == "Bang", \
         format_err_msg("Bang", capitalise_first_letter("bang"))
@@ -92,11 +92,11 @@ def test_capitalise_first_letter():
 # and return true if that year is in the 20th century and false otherwise.
 
 
-def is_in_the_20th_century():
-    pass
+def is_in_the_20th_century(year):
+    return (year - 1) // 100 == 19 
 
 
-@skip_test
+@run_test
 def test_is_in_the_20th_century():
     assert is_in_the_20th_century(1962) is True, \
         format_err_msg(True, is_in_the_20th_century(1962))
@@ -120,11 +120,11 @@ def test_is_in_the_20th_century():
 # HINT: all absolute file paths start with a /
 
 
-def is_absolute_path():
-    pass
+def is_absolute_path(path):
+    return path.startswith("/")
 
 
-@skip_test
+@run_test
 def test_is_absolute_path():
     assert is_absolute_path("/Users/mitch") is True, \
         format_err_msg(True, is_absolute_path("/Users/mitch"))
@@ -149,11 +149,11 @@ def test_is_absolute_path():
 # "The ASCII code for <character> is <character-code>"
 
 
-def get_char_code():
-    pass
+def get_char_code(c):
+    return f"The ASCII code for {c} is {ord(c)}"
 
 
-@skip_test
+@run_test
 def test_get_char_code():
     assert get_char_code("A") == "The ASCII code for A is 65", \
         format_err_msg("The ASCII code for A is 65", get_char_code("A"))
@@ -174,11 +174,11 @@ def test_get_char_code():
 # and return a list of the given length populated with the given character.
 
 
-def create_list():
-    pass
+def create_list(length, c):
+    return [c for i in range(length)]
 
 
-@skip_test
+@run_test
 def test_create_list():
     assert create_list(3, "!") == ["!", "!", "!"], \
         format_err_msg(["!", "!", "!"], create_list(3, "!"))
@@ -199,11 +199,16 @@ def test_create_list():
 #     "Fully charged :)"
 
 
-def check_battery_level():
-    pass
+def check_battery_level(level):
+    if level <= 5:
+        return f"Warning - battery level low: {level}%, please charge your device"
+    elif level <= 99:
+        return f"Battery level: {level}%"
+    else:
+        return "Fully charged :)"
 
 
-@skip_test
+@run_test
 def test_check_battery_level():
     assert check_battery_level(100) == "Fully charged :)", \
         format_err_msg("Fully charged :)", check_battery_level(100))
@@ -250,11 +255,11 @@ def test_check_battery_level():
 # all string elements from the input (retaining the order)
 
 
-def collect_strings():
-    pass
+def collect_strings(lst):
+    return [element for element in lst if type(element) == str]
 
 
-@skip_test
+@run_test
 def test_collect_strings():
     assert collect_strings(["a", "b", "c"]) == ["a", "b", "c"], \
         format_err_msg(["a", "b", "c"], collect_strings(["a", "b", "c"]))
